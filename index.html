@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VueJS Course</title>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <!-- when using computed properties/functions, vue treats the function as data, so we remove the parenthesis -->
+      <p>{{ fullName }}</p>
+      <!-- long form -->
+      <!-- <p><a v-bind:href="url" target="_blank">Google</a></p> -->
+      <!-- short hand version -->
+      <p><a :href="url" target="_blank">Google</a></p>
+      <!--  -->
+      <p v-html="rawUrl"></p>
+      <p>{{ age }}</p>
+
+      <hr />
+      
+      <label>First Name</label>
+      <!-- the lazy modifier only changes the data only if the user stops typing, preventing lots of updates upon every keypress -->
+      <!-- the trim modifier will trim off all whitespaces before and after the input -->
+      <input type="text" v-model.lazy.trim="firstName"/>
+      <label>Middle Name</label>
+      <input type="text" @keyup.enter="updateMiddleName"/>
+      <label>Last Name</label>
+      <!-- since we want more control over what is displayed, we should render only the property on the backend and then update accordingly -->
+      <input type="text" :value="lastName" v-on:input="updateLastName"/>
+
+      <!-- If we add parameters and also want to get the event for any purpose, we have to add $event as an argument.Otherwise by default, without any params, event can be accessed via the js file as a parameter -->
+      <!-- We can use event modifiers like this one here on the v-on input directive. This will basically do what event.preventDefault will do -->
+      <input type="text" :value="lastName" v-on:input.prevent="updateLastName('last name event triggered', $event)"/>
+
+      <label>Age</label>
+      <input type="number" v-model.number="age"/>
+
+
+      <!-- short hand for v-on is @ which is the first instance here -->
+      <button type="button" @click="increment">Increment</button>
+      <button type="button" v-on:click="decrement">Decrement</button>
+    </div>
+<!-- 
+    <div id="app2">
+      <p>Hey!</p>
+      {{ firstName +  " " + lastName}}
+    </div> -->
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
