@@ -31,10 +31,19 @@ const vm = Vue.createApp({
     // computed properties/functions will only run if the field/variable is changed. So not when anything in data changes. 
     //fulleName is currently called everytime any of the data inside the app class changes, we want to prevent that to avoid
     //costly unnecessary computation. 
+    //can never be asynchronous and expects a value to be returned in computer properties
     computed:{
         fullName(){
             return `${this.firstName} ${this.middleName} ${this.lastName}`;
         },
+    },
+    //can perform asyncrhonous tasks
+    watch:{
+        age(newValue,oldValue){
+            setTimeout(()=>{
+                this.age = 30;
+            }, 3000)
+        }
     }
 }).mount('#app');
 
